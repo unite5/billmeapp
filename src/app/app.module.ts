@@ -23,6 +23,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import {HttpModule} from '@angular/http';
 @NgModule({
@@ -71,7 +72,8 @@ import {HttpModule} from '@angular/http';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FileTransfer,
-    File
+    File,
+    LocalNotifications
   ]
 })
 export class AppModule {}

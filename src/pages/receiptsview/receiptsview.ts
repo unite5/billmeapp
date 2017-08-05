@@ -8,6 +8,8 @@ import { ToastController } from 'ionic-angular';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Billview } from '../billview/billview';
+
+import * as moment from 'moment';
 /*
   Generated class for the Receiptsview page.
 
@@ -122,4 +124,8 @@ export class Receiptsview {
     });
   }
 
+  convert(ucreated){
+    let a = moment(new Date(ucreated)).format("MMM DD, YYYY");
+    return a;
+  }
 }

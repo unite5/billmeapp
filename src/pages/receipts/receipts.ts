@@ -6,6 +6,8 @@ import { Receiptsview } from '../receiptsview/receiptsview';
 import { Billview } from '../billview/billview';
 
 import { Receiptprovider } from '../../providers/receiptprovider';
+
+import * as moment from 'moment';
 /*
   Generated class for the Receipts page.
 
@@ -93,4 +95,8 @@ export class Receipts {
     }
   }
 
+  convert(ucreated){
+    let a = moment(new Date(ucreated)).format("MMM DD, YYYY");
+    return a;
+  }
 }

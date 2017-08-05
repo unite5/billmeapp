@@ -43,7 +43,7 @@ export class MyApp {
     }
     else{
       this.billmeuser = localStorage.getItem("billmeUser");
-      this.rootPage = Dashboard;
+      this.rootPage = Dashboard;//Profile;//
     }
     //this.rootPage = Dashboard;
 

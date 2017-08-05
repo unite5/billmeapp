@@ -65,7 +65,7 @@
       <ion-col col-4 *ngFor="let m of mostrecent" class="mrbir1ic1" (click)="openBill(m)">
         <img src="assets/images/mcd.png" class="mrbastimg"><br>
             <p>{{m.billNo}}</p>
-            <p>{{m.buyedAt}}</p>
+            <p>{{convert(m.buyedAt)}}</p>
             <p *ngIf="m.amountCurrency == 'INR'">&#8377; {{m.amount}}</p>
             <p *ngIf="m.amountCurrency == 'USD'">$ {{m.amount}}</p>
       </ion-col>
@@ -101,7 +101,7 @@
       <ion-col col-4 *ngFor="let d of duebills" class="mrbir1ic1" (click)="openBill(d)">
         <img src="assets/images/mcd.png" class="mrbastimg"><br>
             <p>{{d.billNo}}</p>
-            <p>{{d.buyedAt}}</p>
+            <p>{{convert(d.buyedAt)}}</p>
             <p *ngIf="d.amountCurrency == 'INR'">&#8377; {{d.amount}}</p>
             <p *ngIf="d.amountCurrency == 'USD'">$ {{m.amount}}</p>
       </ion-col>

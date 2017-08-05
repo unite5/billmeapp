@@ -4,6 +4,8 @@ import { LoadingController } from 'ionic-angular';
 
 import { Receiptprovider } from '../../providers/receiptprovider';
 import { Receiptsview } from "../receiptsview/receiptsview";
+
+import * as moment from 'moment';
 /*
   Generated class for the Dashboard page.
 
@@ -105,6 +107,11 @@ export class Dashboard {
     let rd = {"id":d.id,"userID":d.userID,"categoryID":d.categoryID,"vendorID":d.vendorID,"billName":d.billName,"name":d.billName,"amount":d.amount,"amountCurrency":d.amountCurrency,"description":d.description,"buyedAt":d.buyedAt,"billNo":d.billNo,"billPDF":d.billPDF,"payedStatus":d.payedStatus,"payedBy":d.payedBy,"time":d.time,"isActive":d.isActive,"created_at":d.created_at,"updated_at":d.updated_at};
     console.log(JSON.stringify(d)+"callthisReceipt()");
     this.navCtrl.push(Receiptsview,rd);
+  }
+
+  convert(ucreated){
+    let a = moment(new Date(ucreated)).format("MMM DD, YYYY");
+    return a;
   }
 
 }

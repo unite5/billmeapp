@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import { service } from '../services/service';
-import { Http,Response } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { ToastController } from 'ionic-angular';
 
-import { HttpDefaultService } from '../../providers/http-default-service';
+import * as moment from 'moment';
+//import { service } from '../services/service';
+//import { Http,Response } from '@angular/http';
+//import 'rxjs/add/operator/map';
+
+import { Userprovider } from '../../providers/userprovider';
 //import { Dbservice } from '../../providers/dbservice';
 /*
   Generated class for the Profile page.
@@ -17,74 +20,84 @@ import { HttpDefaultService } from '../../providers/http-default-service';
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
-  providers:[service,HttpDefaultService]
+  providers:[Userprovider]
 })
 export class Profile {
   d:any;
   titleColor:string;
+  profile:any;
+  uname:string;usname:string;username:string;uemail:any;uaddress:any;ucontact:any;uccode:any;
+  ujoin:any;ugender:string;utoken:any;upic:any;ucreated:any;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public actionCtrl:ActionSheetController,
-    public service:service,public hds:HttpDefaultService,//public dbs:Dbservice,
-    public loadCtrl:LoadingController,
-    public http:Http
+    public toastCtrl:ToastController,
+    public actionCtrl:ActionSheetController,public up:Userprovider,//public dbs:Dbservice,
+    public loadCtrl:LoadingController
     ) {
       if(localStorage.getItem('AppTitleColor')){
         this.titleColor = localStorage.getItem('AppTitleColor');
       }else{
         this.titleColor = 'title';
       }
+      
 
       //console.info(this.service.hello());
-      
-      let loading = this.loadCtrl.create({
-        content: 'Loading...'
-      });
-      loading.present();
-      setTimeout(()=>{
-        loading.dismiss();
-
-       this.hds.findMe4().then(
-         (result)=>{
-           console.log(result);
-           let dt = JSON.parse(JSON.stringify(result));
-           this.d = {
-            'ip':dt.ip,
-            'city':dt.city 
-            };
-         },
-         (error)=>{
-           console.error(error);
-         }
-         );
-        //http://ip-api.com/json    //http://freegeoip.net/json/
-        
-
-        /*//db code
-        this.dbs.createPerson("ABCD","Mumbai")
-        .then((result)=>{
-          console.info(result);
-
-          this.dbs.getPeople().then(
-            (result2)=>{
-              console.info(result2);
-            },
-            (error2)=>{
-              console.info(error2);
-            }
-          );
-        },(error)=>{
-          console.error(error);
-        })*/
-
-
-      },5000);
-      
-    }
+      this.loadProfile();
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+  }
+
+  loadProfile(){
+    let loading = this.loadCtrl.create({
+      spinner: 'dots',
+      content: `
+        <ion-spinner class="loadDataSpin" name="dots"></ion-spinner>`,
+      cssClass:'classforspindata'
+    });
+    loading.present();
+    let lData = {
+      uid:localStorage.getItem("billmeUID")
+    };
+    this.up.getprofile(lData).then(
+    (result)=>{
+      console.log(result);
+      let dt = JSON.parse(JSON.stringify(result));
+      if(dt.status == "success"){
+        let d = JSON.parse(JSON.stringify(dt.data));
+        console.log(d.name);
+        console.log(dt.data.name);
+        this.profile = dt.data;
+        this.uname = d.name;
+        this.usname = d.surname;
+        this.username = d.name;
+        this.uemail = d.email;
+        this.uaddress = d.address;
+        this.ucontact = d.contact;
+        this.uccode = d.phoneCode;
+        this.ujoin = this.convertTimestamptoDate(d.time);
+        this.ugender = d.gender;
+        this.utoken = d.uToken;
+        this.ucreated = d.created_at;
+        this.upic = d.profilePic?d.profilePic:'assets/images/bg3.png';
+      }else{
+        this.toastCtrl.create({
+            message:"Network is busy",duration:2000,position:'top'
+        }).present();
+      }
+            loading.dismiss();
+    },
+    (error)=>{
+      this.toastCtrl.create({
+          message:"Network is unavailable",duration:2000,position:'top'
+      }).present();
+      loading.dismiss();
+      console.error(error);
+    }
+    );
   }
 
   changePicture(){
@@ -114,4 +127,13 @@ export class Profile {
     }).present();
   }
 
+  convertTimestamptoDate(d){
+    let ans = moment(new Date(d)).format("MMM DD, YYYY");
+    return ans;
+  }
+
+  isme(ucreated){
+    let a = moment(new Date(ucreated)).format("MMM DD, YYYY");
+    return a;
+  }
 }

@@ -9,54 +9,63 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Profile</ion-title>
+    <ion-title>Profile {{uname}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content no-padding>
 
-<ion-card>
-
-  <ion-card-header>
-    Card Header
-  </ion-card-header>
-
-  <ion-card-content>
-    {{myvar}}<br>
-    <p  >{{d | json}}</p>
-    <p ></p>
-  </ion-card-content>
-
-</ion-card>
-
-  <img src="assets/images/user1.png" class="profileimage" (click)="changePicture()" />
-
-  <ion-list>
-    <ion-item>
-      <ion-label floating>myname</ion-label>
-      <ion-input type="text" ng-value="ABCD"></ion-input>
-    </ion-item>
-  </ion-list>
-
+  <img src="{{upic}}" class="profileimage" (click)="changePicture()" />
 
   <ion-card>
-    <ion-card-header>
-      Born: 02 Jun, 2016
+
+    <ion-card-header class="profilename">
+      {{uname+' '+usname}}
     </ion-card-header>
+
     <ion-card-content>
-      <ion-list no-lines>
+      <ion-list>
         <ion-item>
-          <div ion-item>
-            Lives in Address.
-          </div>
+          <ion-icon name="ios-mail-outline" item-start></ion-icon>
+            {{uemail}}
         </ion-item>
         <ion-item>
-          <div ion-item>
-            Email Id.
-          </div>
+          <ion-icon name="ios-person-outline" item-start></ion-icon>
+            {{ugender}}
         </ion-item>
       </ion-list>
     </ion-card-content>
+
   </ion-card>
+
+    <ion-card>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-icon name="ios-contact-outline" item-start></ion-icon>
+            {{uccode+''+ucontact}}
+        </ion-item>
+      </ion-list>
+      <ion-card>
+        <ion-card-content>
+          <ion-icon name="ios-barcode-outline" item-start></ion-icon>
+          {{uaddress}}
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+
+  </ion-card>
+
+  
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <ion-icon name="ios-timer-outline" item-start></ion-icon>
+          Joined at {{ujoin}} 
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
