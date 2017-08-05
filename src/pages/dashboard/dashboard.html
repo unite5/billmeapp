@@ -62,7 +62,7 @@
     </div>
   <ion-grid class="mrbig1">
     <ion-row class="mrbir1">
-      <ion-col col-4 *ngFor="let m of mostrecent" class="mrbir1ic1">
+      <ion-col col-4 *ngFor="let m of mostrecent" class="mrbir1ic1" (click)="openBill(m)">
         <img src="assets/images/mcd.png" class="mrbastimg"><br>
             <p>{{m.billNo}}</p>
             <p>{{m.buyedAt}}</p>
@@ -98,7 +98,7 @@
     </div>
   <ion-grid class="mrbig1">
     <ion-row class="mrbir1">
-      <ion-col col-4 *ngFor="let d of duebills" class="mrbir1ic1">
+      <ion-col col-4 *ngFor="let d of duebills" class="mrbir1ic1" (click)="openBill(d)">
         <img src="assets/images/mcd.png" class="mrbastimg"><br>
             <p>{{d.billNo}}</p>
             <p>{{d.buyedAt}}</p>
