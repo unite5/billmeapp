@@ -9,15 +9,19 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Receipts</ion-title>
+    <ion-title *ngIf="!isOn">Receipts</ion-title>
+    <ion-searchbar *ngIf="isOn" (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-buttons end>
+      <button (click)="toggleDetails()" ion-button icon-only color="royal">
+        <ion-icon name="ios-search"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding class="receiptsic">
-    <ion-searchbar
-      (ionInput)="getItems($event)">
-    </ion-searchbar>
+    
     <ion-list>
 
     <ion-item class="rcptii" *ngFor="let d of bills" (click)="callthisReceipt(d)">

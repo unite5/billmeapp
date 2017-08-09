@@ -25,7 +25,7 @@ export class Categorybills {
   navDesc:any;
   navTotal:any;
   navAmount:any;
-  catbills:any;
+  catbills:any;catbills2:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -68,6 +68,7 @@ export class Categorybills {
       let dt = JSON.parse(JSON.stringify(result));
       if(dt.status == "success"){
         this.catbills = dt.data;
+        this.catbills2 = dt.data;
       }else{
         console.log("no categories");
       }
@@ -89,5 +90,26 @@ export class Categorybills {
   convert(ucreated){
     let a = moment(new Date(ucreated)).format("MMM DD, YYYY");
     return a;
+  }
+
+  //filter
+  filterlist(){
+    this.catbills = this.catbills2;
+  }
+  getItems(ev) {
+    // Reset items back to all of the items
+    this.filterlist();
+
+    // set val to the value of the ev target
+    var val = ev.target.value;
+
+    //console.log(val);
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.catbills = this.catbills.filter((item) => {
+        //console.log(item);
+        return ((item.billName).toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
   }
 }

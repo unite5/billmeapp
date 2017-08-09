@@ -6,6 +6,8 @@ import { FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { ToastController } from 'ionic-angular';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { DocumentViewer } from '@ionic-native/document-viewer';
+import { DocumentViewerOptions } from '@ionic-native/document-viewer';
 
 import { Billview } from '../billview/billview';
 
@@ -32,12 +34,14 @@ export class Receiptsview {
   navbillPDF:any;navpayedStatus:string;navpayedBy:string;
   navtime:any;navisActive:string;navcreated_at:any;navupdated_at:any;
 
+  isImg:boolean;isPdf:boolean;
   constructor(
     public navCtrl: NavController, 
     public toastCtrl:ToastController,
     public transfer: FileTransfer, 
     public file: File,
     public localNotifications: LocalNotifications,
+    public document: DocumentViewer,
     public navParams: NavParams
     ) {
       if(localStorage.getItem('AppTitleColor')){
@@ -66,7 +70,7 @@ export class Receiptsview {
     this.navdescription = this.navParams.get("description");
     this.navbuyedAt = this.navParams.get("buyedAt");
     this.navbillNo = this.navParams.get("billNo");
-    this.navbillPDF = this.navParams.get("billPDF")?this.navParams.get("billPDF"):"assets/images/logo.png";
+    //this.navbillPDF = this.navParams.get("billPDF")?this.navParams.get("billPDF"):"assets/images/logo.png";
     this.navpayedStatus = this.navParams.get("payedStatus");
     this.navpayedBy = this.navParams.get("payedBy");
     this.navtime = this.navParams.get("time");
@@ -76,6 +80,18 @@ export class Receiptsview {
     this.navId = this.navParams.get("id");
     this.navName = this.navParams.get("name");
     console.warn(this.navId+" "+this.navName);
+
+    //this.navbillPDF = this.navParams.get("billPDF")?this.navParams.get("billPDF"):"assets/images/logo.png";
+    let im = this.navParams.get("billPDF");
+    let liof = im.substr(im.lastIndexOf("/"));
+    let spl = liof.split(".");let pic = spl[1];
+    if(pic == "pdf" || pic == "PDF" || pic == "DOC" || pic == "doc" || pic == "docx" || pic == "DOCX"){
+      this.isPdf = true;this.isImg = false;
+      this.navbillPDF = this.navParams.get("billPDF");
+    }else{
+      this.isPdf = false;this.isImg = true;
+      this.navbillPDF = this.navParams.get("billPDF")?this.navParams.get("billPDF"):"assets/images/logo.png";
+    }
   }
 
   openEditBill(){
@@ -128,4 +144,17 @@ export class Receiptsview {
     let a = moment(new Date(ucreated)).format("MMM DD, YYYY");
     return a;
   }
+
+  viewpdf(){
+    const options: DocumentViewerOptions = {
+      title: 'Bill '+this.navbillName,
+      email: {enabled:true},
+      print:{enabled:true}
+    }
+
+    let url = "Bill_"+this.navbillNo+this.navbuyedAt+".pdf";
+    let path = this.navbillPDF;
+    this.document.viewDocument(path, 'application/pdf', options);
+  }
+  
 }

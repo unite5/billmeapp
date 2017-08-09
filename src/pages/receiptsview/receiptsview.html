@@ -20,7 +20,11 @@
 
 
   <ion-card>
-    <div class="billdiv"><img src="{{navbillPDF}}" class="billimage" (click)="viewfull()" /></div>
+    <div class="billdiv">
+      <img *ngIf="isImg" src="{{navbillPDF}}" class="billimage" (click)="viewfull()" />
+
+      <img *ngIf="isPdf" src="assets/images/ic_pdf.png" class="billimagepdf" (click)="viewpdf()"/><!--{{navbillPDF}}-->
+    </div>
     <ion-card-content>
       <ion-card-title>
         {{navamountCurrency+' '+navamount }} /-

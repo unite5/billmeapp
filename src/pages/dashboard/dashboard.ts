@@ -38,6 +38,7 @@ export class Dashboard {
         this.titleColor = 'title';
       }
       
+      
   }
 
   ionViewDidLoad() {
@@ -53,7 +54,7 @@ export class Dashboard {
         <ion-spinner class="loadDataSpin" name="dots"></ion-spinner>`,
       cssClass:'classforspindata'
     });
-    loading.present();
+    //loading.present();
 
     this.rp.loadDashboardData().then(
       data=>{
@@ -88,10 +89,10 @@ export class Dashboard {
           console.log(this.mostrecent);
 
           //setTimeout(()=>{
-            loading.dismiss();
+            //loading.dismiss();
           //},8000);
         }else{
-          loading.dismiss();
+          //loading.dismiss();
           console.log("No bills right now available");
         }
       },

@@ -22,6 +22,7 @@ import * as moment from 'moment';
 export class Receipts {
   titleColor:string;
   bills:any;bills2:any;
+  private isOn: boolean = false;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -35,6 +36,18 @@ export class Receipts {
       }
       this.loadReceipt();
     }
+
+  /*Search box functionality*/  
+  getButtonText(): string {
+    return `Switch ${ this.isOn ? 'Off' : 'On' }`;
+  }
+  setState(): void {
+    this.isOn = !this.isOn;
+  }
+  toggleDetails() {
+    this.isOn = !this.isOn;
+  }
+  /**END */
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReceiptsPage');
@@ -85,11 +98,11 @@ export class Receipts {
     // set val to the value of the ev target
     var val = ev.target.value;
 
-    console.log(val);
+    //console.log(val);
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.bills = this.bills.filter((item) => {
-        console.log(item);
+        //console.log(item);
         return ((item.billName).toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }

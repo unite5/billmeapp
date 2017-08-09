@@ -18,12 +18,15 @@ import { Homeslider } from '../pages/homeslider/homeslider';
 import { Categories } from '../pages/categories/categories';
 import { Categorybills } from '../pages/categorybills/categorybills';
 import { Deals } from '../pages/deals/deals';
+import { Wallet } from '../pages/wallet/wallet';
+import { Serviceconnect } from '../pages/serviceconnect/serviceconnect';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { DocumentViewer } from '@ionic-native/document-viewer';
 
 import {HttpModule} from '@angular/http';
 @NgModule({
@@ -42,7 +45,9 @@ import {HttpModule} from '@angular/http';
     Homeslider,
     Categories,
     Categorybills,
-    Deals
+    Deals,
+    Wallet,
+    Serviceconnect
   ],
   imports: [
     HttpModule,
@@ -65,7 +70,9 @@ import {HttpModule} from '@angular/http';
     Homeslider,
     Categories,
     Categorybills,
-    Deals
+    Deals,
+    Wallet,
+    Serviceconnect
   ],
   providers: [
     StatusBar,
@@ -73,7 +80,8 @@ import {HttpModule} from '@angular/http';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FileTransfer,
     File,
-    LocalNotifications
+    LocalNotifications,
+    DocumentViewer
   ]
 })
 export class AppModule {}

@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 //import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+//import { ListPage } from '../pages/list/list';
 //import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
 //import { Register } from '../pages/register/register';
@@ -15,6 +15,8 @@ import { Receipts } from '../pages/receipts/receipts';
 import { Homeslider } from '../pages/homeslider/homeslider';
 import { Categories } from '../pages/categories/categories';
 import { Deals } from '../pages/deals/deals';
+import { Wallet } from '../pages/wallet/wallet';
+import { Serviceconnect } from '../pages/serviceconnect/serviceconnect';
 
 @Component({
   templateUrl: 'app.html'
@@ -53,8 +55,8 @@ export class MyApp {
       { title: 'Dashboard', component: Dashboard,icon: 'home'},
       { title: 'Bills', component: Receipts ,icon: 'paper'},
       { title: 'Categories', component: Categories ,icon: 'copy'},
-      { title: 'Wallet', component: ListPage ,icon: 'beaker'},
-      { title: 'Service Connect', component: ListPage ,icon: 'filing'},
+      { title: 'Wallet', component: Wallet ,icon: 'beaker'},
+      { title: 'Service Connect', component: Serviceconnect ,icon: 'filing'},
       { title: 'Deals', component: Deals ,icon: 'logo-designernews'},
       { title: 'Profile', component: Profile ,icon: 'bowtie'},
       { title: 'Settings', component: Setting ,icon: 'cog'}

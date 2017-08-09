@@ -20,6 +20,7 @@ export class Categories {
 
   titleColor:string;
   category:any;category2:any;
+  private isOn: boolean = false;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -33,6 +34,18 @@ export class Categories {
       }
       this.loadCategories();
   }
+
+  /*Search box functionality*/  
+  getButtonText(): string {
+    return `Switch ${ this.isOn ? 'Off' : 'On' }`;
+  }
+  setState(): void {
+    this.isOn = !this.isOn;
+  }
+  toggleDetails() {
+    this.isOn = !this.isOn;
+  }
+  /**END */
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Categories');
@@ -91,11 +104,11 @@ export class Categories {
     // set val to the value of the ev target
     var val = ev.target.value;
 
-    console.log(val);
+    //console.log(val);
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.category = this.category.filter((item) => {
-        console.log(item);
+        //console.log(item);
         return ((item.name).toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
