@@ -28,7 +28,8 @@ export class Deals {
     if(localStorage.getItem('AppTitleColor')){
       this.titleColor = localStorage.getItem('AppTitleColor');
     }else{
-      this.titleColor = 'title';
+      localStorage.setItem('AppTitleColor',"newtitle");
+        this.titleColor = 'newtitle';
     }
 
     this.getDealData();

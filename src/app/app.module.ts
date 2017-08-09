@@ -27,6 +27,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DocumentViewer } from '@ionic-native/document-viewer';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import {HttpModule} from '@angular/http';
 @NgModule({
@@ -81,7 +82,8 @@ import {HttpModule} from '@angular/http';
     FileTransfer,
     File,
     LocalNotifications,
-    DocumentViewer
+    DocumentViewer,
+    InAppBrowser
   ]
 })
 export class AppModule {}

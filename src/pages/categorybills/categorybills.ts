@@ -26,12 +26,20 @@ export class Categorybills {
   navTotal:any;
   navAmount:any;
   catbills:any;catbills2:any;
+
+  titleColor:string;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public loadCtrl:LoadingController,
     public rp:Categoriesprovider
   ) {
+    if(localStorage.getItem('AppTitleColor')){
+      this.titleColor = localStorage.getItem('AppTitleColor');
+    }else{
+      localStorage.setItem('AppTitleColor',"newtitle");
+      this.titleColor = 'newtitle';
+    }
     this.loadMybills();
   }
 

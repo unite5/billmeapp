@@ -8,10 +8,12 @@ import { ToastController } from 'ionic-angular';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 import { DocumentViewerOptions } from '@ionic-native/document-viewer';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Billview } from '../billview/billview';
 
 import * as moment from 'moment';
+declare var cordova:any;
 /*
   Generated class for the Receiptsview page.
 
@@ -35,6 +37,7 @@ export class Receiptsview {
   navtime:any;navisActive:string;navcreated_at:any;navupdated_at:any;
 
   isImg:boolean;isPdf:boolean;
+  
   constructor(
     public navCtrl: NavController, 
     public toastCtrl:ToastController,
@@ -42,12 +45,14 @@ export class Receiptsview {
     public file: File,
     public localNotifications: LocalNotifications,
     public document: DocumentViewer,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public iab: InAppBrowser
     ) {
       if(localStorage.getItem('AppTitleColor')){
         this.titleColor = localStorage.getItem('AppTitleColor');
       }else{
-        this.titleColor = 'title';
+        localStorage.setItem('AppTitleColor',"newtitle");
+        this.titleColor = 'newtitle';
       }
 
       this.loadNavVals();
@@ -102,6 +107,49 @@ export class Receiptsview {
   }
 
   download(){
+    const fs:string = cordova.file.dataDirectory;
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    const url = this.navbillPDF;
+    let name = "Bill_"+this.navbillNo+this.navbuyedAt+".pdf";
+    //var fileTransfer = new Transfer();
+    let path = cordova.file.dataDirectory + name;
+    this.localNotifications.schedule({
+        id: 1,
+        title:'Downloading Bill...',
+        icon: 'assets/images/logo.png',
+        smallIcon: 'assets/images/logo.png'
+      });
+    fileTransfer.download(url, cordova.file.dataDirectory + name).then((entry) => {
+      //console.log('download complete: ' + entry.toURL());
+      this.toastCtrl.create({
+            message:"Downloading in process!",
+            duration:2000,
+            position:'middle'
+          }).present();
+          alert(JSON.stringify(entry));
+      this.localNotifications.schedule({
+        id: 1,
+        title:'Bill Download completed!',
+        text: 'Saved bill '+name+' at '+path,
+        icon: 'assets/images/logo.png',
+        smallIcon: 'assets/images/logo.png'
+      });
+    }, (error) => {
+      this.toastCtrl.create({
+            message:"Bill can not be downloaded, try again.",
+            duration:2000,
+            position:'top'
+          }).present();
+          alert(JSON.stringify(error));
+          this.localNotifications.schedule({
+            id: 1,
+            title:'Bill not able to download completely, try again',
+            icon: 'assets/images/logo.png',
+            smallIcon: 'assets/images/logo.png'
+          });
+    });
+  }
+  download2(){
     /*this.navCtrl.push(Billview,{
       name:this.navbillName+' '+this.navbuyedAt,
       image:this.navbillPDF
@@ -145,7 +193,7 @@ export class Receiptsview {
     return a;
   }
 
-  viewpdf(){
+  viewpdf2(){
     const options: DocumentViewerOptions = {
       title: 'Bill '+this.navbillName,
       email: {enabled:true},
@@ -155,6 +203,19 @@ export class Receiptsview {
     let url = "Bill_"+this.navbillNo+this.navbuyedAt+".pdf";
     let path = this.navbillPDF;
     this.document.viewDocument(path, 'application/pdf', options);
+  }
+
+  viewpdf(){
+    let path = this.navbillPDF;
+    const browser = this.iab.create(path,"_self",{
+      location:"yes",
+      clearcache:'yes',
+      zoom:'yes',
+      hardwareback:'yes',
+      closebuttoncaption:'OK'
+    });
+
+    browser.show();
   }
   
 }
