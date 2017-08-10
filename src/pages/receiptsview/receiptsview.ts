@@ -11,6 +11,7 @@ import { DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Billview } from '../billview/billview';
+import { Billviewpdf } from '../billviewpdf/billviewpdf';
 
 import * as moment from 'moment';
 declare var cordova:any;
@@ -63,6 +64,21 @@ export class Receiptsview {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReceiptsviewPage');
+    this.file.checkDir(this.file.externalRootDirectory, 'billme')
+    .then(
+      _ => alert('Directory exists')
+    )
+    .catch(
+      
+      err => alert('Directory doesnt exist')
+    );
+    this.file.createDir(this.file.externalRootDirectory, 'billme',false)
+    .then(
+      _ => alert('created directory')
+    )
+    .catch(
+      err => alert('not created Directory')
+    );
   }
 
   loadNavVals(){
@@ -107,19 +123,19 @@ export class Receiptsview {
   }
 
   download(){
-    const fs:string = cordova.file.dataDirectory;
+    const fs:string = cordova.file.externalRootDirectory+"billme";
     const fileTransfer: FileTransferObject = this.transfer.create();
     const url = this.navbillPDF;
-    let name = "Bill_"+this.navbillNo+this.navbuyedAt+".pdf";
+    let name = "Bill_"+this.navbuyedAt+".pdf";
     //var fileTransfer = new Transfer();
-    let path = cordova.file.dataDirectory + name;
+    let path = cordova.file.externalRootDirectory+"billme/" + name;
     this.localNotifications.schedule({
         id: 1,
         title:'Downloading Bill...',
         icon: 'assets/images/logo.png',
         smallIcon: 'assets/images/logo.png'
       });
-    fileTransfer.download(url, cordova.file.dataDirectory + name).then((entry) => {
+    fileTransfer.download(url, cordova.file.externalRootDirectory+"billme/" + name).then((entry) => {
       //console.log('download complete: ' + entry.toURL());
       this.toastCtrl.create({
             message:"Downloading in process!",
@@ -205,7 +221,7 @@ export class Receiptsview {
     this.document.viewDocument(path, 'application/pdf', options);
   }
 
-  viewpdf(){
+  viewpdf1(){
     let path = this.navbillPDF;
     const browser = this.iab.create(path,"_self",{
       location:"yes",
@@ -216,6 +232,13 @@ export class Receiptsview {
     });
 
     browser.show();
+  }
+  
+  viewpdf(){
+    let path = this.navbillPDF;
+    this.navCtrl.push(Billviewpdf,{
+      navpath:path
+    });
   }
   
 }

@@ -5,14 +5,20 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>billviewpdf</ion-title>
+  <ion-navbar class="Catbills" color="{{titleColor}}">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Bills {{pdfSrc}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content no-padding>
+  <pdf-viewer [src]="pdfSrc" 
+              [page]="page" 
+              [original-size]="true" 
+              style="display: block;"
+              [zoom]="0.1"
+  ></pdf-viewer>
 </ion-content>

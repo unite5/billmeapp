@@ -16,11 +16,20 @@ export class Billviewpdf {
 
   pdfSrc: string;
   page: number;
+  titleColor:string;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams
   ) {
-    this.pdfSrc = '/pdf-test.pdf';
+    if(localStorage.getItem('AppTitleColor')){
+        this.titleColor = localStorage.getItem('AppTitleColor');
+      }else{
+        localStorage.setItem('AppTitleColor',"newtitle");
+        this.titleColor = 'newtitle';
+      }
+
+    this.pdfSrc = this.navParams.get("navpath");
+    console.log(this.pdfSrc);
     this.page = 1;
   }
 
