@@ -153,7 +153,7 @@ export class Signup {
         'username':this.username,
         'password':this.password
       }
-      let loading = this.loadCtrl.create({
+      let loading = this.loadCtrl.create({ 
         content: 'Signin...'
       });
 

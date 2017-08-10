@@ -20,6 +20,7 @@ import { Categorybills } from '../pages/categorybills/categorybills';
 import { Deals } from '../pages/deals/deals';
 import { Wallet } from '../pages/wallet/wallet';
 import { Serviceconnect } from '../pages/serviceconnect/serviceconnect';
+import { Billviewpdf } from '../pages/billviewpdf/billviewpdf';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -29,6 +30,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import {HttpModule} from '@angular/http';
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import {HttpModule} from '@angular/http';
     Categorybills,
     Deals,
     Wallet,
-    Serviceconnect
+    Serviceconnect,
+    Billviewpdf,
+    PdfViewerComponent
   ],
   imports: [
     HttpModule,
@@ -73,7 +77,8 @@ import {HttpModule} from '@angular/http';
     Categorybills,
     Deals,
     Wallet,
-    Serviceconnect
+    Serviceconnect,
+    Billviewpdf
   ],
   providers: [
     StatusBar,
