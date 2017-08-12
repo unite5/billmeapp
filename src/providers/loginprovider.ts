@@ -11,14 +11,16 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Loginprovider {
 
+  url:any;
   constructor(public http: Http) {
     console.log('Hello Loginprovider Provider');
+    this.url = localStorage.getItem('appUrl')+"/"+localStorage.getItem('ApiKey');
   }
 
   loggedIn(loginData){
     loginData = JSON.stringify(loginData);
-    let url = localStorage.getItem('appUrl')+"/"+localStorage.getItem('ApiKey');
-    console.warn(url);
+    let url = this.url;
+    //console.warn(url);
     return new Promise((resolve,reject)=>{
       this.http.post(url+'/login',loginData)
       .map(res=>res.json())
@@ -35,8 +37,9 @@ export class Loginprovider {
 
   register(regData){
     regData = JSON.stringify(regData);
+    let url = this.url;
     return new Promise((resolve,reject)=>{
-      this.http.post('link',regData)
+      this.http.post(url+'/newregister',regData)
       .map(res=>res.json())
       .subscribe(
         data=>{

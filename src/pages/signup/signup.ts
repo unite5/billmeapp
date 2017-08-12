@@ -206,12 +206,63 @@ export class Signup {
     }
   }
 
+  //Registration
   DoRegister(){
     //this.regname = (<HTMLInputElement>document.getElementById('regUsername')).value;
-    console.log(this.regname+" "+(<HTMLInputElement>document.getElementById('regUsername')).value+" p:"+this.regpassword);
+    //console.log(this.regname+" "+(<HTMLInputElement>document.getElementById('regUsername')).value+" p:"+this.regpassword);
     console.log(this.regagree+" "+this.regaddress+" "+this.reggender+" "+this.regemail+" "+this.regpassword+" "+this.regname);
     if(this.regagree == true){
       console.log(this.regagree+" "+this.regaddress+" "+this.reggender+" "+this.regemail+" "+this.regpassword+" "+this.regname);
+      let regData = {
+        'agree':this.regagree,
+        'username':this.regname,
+        'pass':this.regpassword,
+        'gender':this.reggender,
+        'email':this.regemail,
+        'address':this.regaddress,
+        'time':new Date()
+      };
+      let loading = this.loadCtrl.create({ 
+        content: 'Registering...'
+      });
+      this.loginServ.register(regData).then(
+        (res)=>{
+          loading.dismiss();
+          console.info(JSON.stringify(res));
+          let ans = JSON.parse(JSON.stringify(res));
+          if(ans.status == "success"){
+            /*let loading2;
+            let ud = JSON.parse(JSON.stringify(ans.data));
+            localStorage.setItem("billmeUID",ud.id);
+            localStorage.setItem("billmeUser",this.regname);
+            localStorage.setItem("billmePass",this.regpassword);
+            localStorage.setItem("billmeIn","Y");
+            loading2 = this.loadCtrl.create({
+                content: 'Finalizing your assets...',
+                duration: 2000
+              });
+            loading2.present();
+            setTimeout(()=>{
+                this.navCtrl.push(MyApp);
+            },2005);*/
+          }else{
+            this.toastCtrl.create({
+              message:ans.message,
+              duration:2000,
+              position:'top'
+            }).present();
+          }
+        },
+        (err)=>{
+          console.error(JSON.stringify(err));
+          loading.dismiss();
+          this.toastCtrl.create({
+              message:'Network temporary unvailable!',
+              duration:2000,
+              position:'top'
+            }).present();
+        }
+      );
     }else{
       this.toastCtrl.create({
         message:'You should agree with terms and condition',
@@ -220,6 +271,10 @@ export class Signup {
       }).present();
     }
   }
+  findreg(regData){//server call method
+    
+  }
+  //END
 
   //generatekey
   generateapi(){

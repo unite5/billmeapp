@@ -69,12 +69,12 @@ export class Profile {
       let dt = JSON.parse(JSON.stringify(result));
       if(dt.status == "success"){
         let d = JSON.parse(JSON.stringify(dt.data));
-        console.log(d.name);
-        console.log(dt.data.name);
+        console.log(d.username);
+        console.log(dt.data.username);
         this.profile = dt.data;
-        this.uname = d.name;
-        this.usname = d.surname;
-        this.username = d.name;
+        this.uname = d.username;
+        this.usname = d.firstname+" "+d.lastname;
+        this.username = d.username;
         this.uemail = d.email;
         this.uaddress = d.address;
         this.ucontact = d.contact;
