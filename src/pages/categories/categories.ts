@@ -20,6 +20,7 @@ export class Categories {
 
   titleColor:string;
   category:any;category2:any;
+  categorycount:number;
   private isOn: boolean = false;
   constructor(
     public navCtrl: NavController, 
@@ -70,12 +71,21 @@ export class Categories {
       if(dt.status == "success"){
         this.category = dt.data;
         this.category2 = dt.data;//for fitering records
+        if((this.category).length>0){
+          this.categorycount=1;
+          //console.log(this.categorycount);
+        }else{
+          this.categorycount=0;
+          //console.log(this.categorycount);
+        }
       }else{
+        this.categorycount=0;
         console.log("no categories");
       }
       loading.dismiss();
     },
     (error)=>{
+      this.categorycount=0;
       loading.dismiss();
       console.error(error);
     }

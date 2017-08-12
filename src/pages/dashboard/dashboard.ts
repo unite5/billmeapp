@@ -26,6 +26,8 @@ export class Dashboard {
   mostrecent:any;
   deals:any;
 
+  mostrecentcount:number;duebillscount:number;dealscount:number;
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -59,11 +61,9 @@ export class Dashboard {
 
     this.rp.loadDashboardData().then(
       data=>{
-        console.info(data);
+        //console.info(data);
         let d = JSON.parse(JSON.stringify(data));
         if(d.status=="success"){
-          this.duebills = d.duebill;
-          console.log(this.duebills);
 
           let exp = d.expenditure;
           if(exp == null || exp == "00.00"){
@@ -85,19 +85,56 @@ export class Dashboard {
           }
           
           this.deals = d.deals;
+          if((this.deals).length>0){
+            this.dealscount=1;//duebillscount:number;dealscount:number;
+            //console.log(this.dealscount);
+          }else{
+            this.dealscount=0;
+            //console.log(this.dealscount);
+          }
 
           this.mostrecent = d.mostrecent;
-          console.log(this.mostrecent);
+          if((this.mostrecent).length>0){
+            this.mostrecentcount=1;//duebillscount:number;dealscount:number;
+            //console.log(this.mostrecentcount);
+          }else{
+            this.mostrecentcount=0;
+            //console.log(this.mostrecentcount);
+          }
+          //console.log(this.mostrecent);
+
+
+          this.duebills = d.duebill;
+          if((this.duebills).length>0){
+            this.duebillscount=1;
+            //console.log(this.duebillscount);
+          }else{
+            this.duebillscount=0;
+            //console.log(this.duebillscount);
+          }
+          //console.log(this.duebills);
 
           //setTimeout(()=>{
             //loading.dismiss();
           //},8000);
         }else{
+          this.expenditure = "00.00";
+          this.ebillreceived = "0";
+          this.totalduebill = "0";
+          this.dealscount=0;
+          this.mostrecentcount=0;
+          this.duebillscount=0;
           //loading.dismiss();
           console.log("No bills right now available");
         }
       },
       error=>{
+        this.expenditure = "00.00";
+        this.ebillreceived = "0";
+        this.totalduebill = "0";
+        this.dealscount=0;
+        this.mostrecentcount=0;
+        this.duebillscount=0;
         loading.dismiss();
         console.error(error+"\t error");
       }

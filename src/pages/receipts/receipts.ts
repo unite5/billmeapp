@@ -22,6 +22,7 @@ import * as moment from 'moment';
 export class Receipts {
   titleColor:string;
   bills:any;bills2:any;
+  billscount:number;
   private isOn: boolean = false;
   constructor(
     public navCtrl: NavController, 
@@ -77,11 +78,19 @@ export class Receipts {
       let dt = JSON.parse(JSON.stringify(result));
       this.bills = dt.data;
       this.bills2 = dt.data;//for fitering records
+      if((this.bills).length>0){
+        this.billscount=1;
+        //console.log(this.billscount);
+      }else{
+        this.billscount=0;
+        //console.log(this.billscount);
+      }
       //setTimeout(()=>{
             loading.dismiss();
         //  },8000);
     },
     (error)=>{
+      this.billscount=0;
       loading.dismiss();
       console.error(error);
     }

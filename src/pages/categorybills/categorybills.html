@@ -30,6 +30,10 @@
     </ion-card-content>
   </ion-card>
 
+  <div *ngIf="cbcount == 0" class="nobcats">
+      <img src="assets/images/no_data.png" class="ncbimg">
+  </div>
+  <div *ngIf="cbcount == 1">
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 
   <ion-list>
@@ -42,6 +46,7 @@
       <p>{{convert(d.buyedAt)}}</p>
     </ion-item>
   </ion-list>
+  </div>
   <!--<ion-list>
     <ion-item>
       <ion-avatar item-start>

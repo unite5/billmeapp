@@ -73,7 +73,7 @@ export class Profile {
         console.log(dt.data.username);
         this.profile = dt.data;
         this.uname = d.username;
-        this.usname = d.firstname+" "+d.lastname;
+        this.usname = d.firstname?d.firstname:""+" "+d.lastname?d.lastname:"";
         this.username = d.username;
         this.uemail = d.email;
         this.uaddress = d.address;

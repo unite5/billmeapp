@@ -22,7 +22,10 @@
 
 <ion-content padding>
   <!--<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>-->
-  <ion-list>
+  <div *ngIf="categorycount == 0" class="nocats">
+      <img src="assets/images/no_data2.png" class="ncimg">
+  </div>
+  <ion-list *ngIf="categorycount == 1">
     <ion-item *ngFor="let c of category" (click)="checkcategories(c)">
       <ion-grid>
         <ion-row>

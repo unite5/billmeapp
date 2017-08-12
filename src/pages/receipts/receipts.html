@@ -21,8 +21,10 @@
 
 
 <ion-content padding class="receiptsic">
-    
-    <ion-list>
+    <div *ngIf="billscount == 0" class="nobills">
+      <img src="assets/images/NoDataFound.png" class="nbimg">
+    </div>
+    <ion-list *ngIf="billscount == 1">
 
     <ion-item class="rcptii" *ngFor="let d of bills" (click)="callthisReceipt(d)">
       <div class="rcptdiv">

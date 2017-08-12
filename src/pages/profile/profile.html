@@ -21,7 +21,7 @@
   <ion-card>
 
     <ion-card-header class="profilename">
-      {{uname+' '+usname}}
+      {{uname+' '}}{{usname?usname:""}}
     </ion-card-header>
 
     <ion-card-content>
@@ -42,7 +42,7 @@
     <ion-card>
 
     <ion-card-content>
-      <ion-list>
+      <ion-list *ngIf="ucontact != null">
         <ion-item>
           <ion-icon name="ios-contact-outline" item-start></ion-icon>
             {{uccode+''+ucontact}}

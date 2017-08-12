@@ -19,6 +19,7 @@ import { Receiptprovider } from '../../providers/receiptprovider';
 export class Deals {
   titleColor:string;
   deals:any;
+  dealscount:number;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -54,7 +55,13 @@ export class Deals {
         let d = JSON.parse(JSON.stringify(data));
         if(d.status=="success"){
           this.deals = d.data;
-
+          if((this.deals).length>0){
+            this.dealscount=1;
+            //console.log(this.dealscount);
+          }else{
+            this.dealscount=0;
+            //console.log(this.dealscount);
+          }
           //setTimeout(()=>{
             loading.dismiss();
           //},8000);

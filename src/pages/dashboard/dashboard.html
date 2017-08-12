@@ -60,7 +60,10 @@
     <div class="mrbhead">
       Most Recent Bills
     </div>
-  <ion-grid class="mrbig1">
+    <div *ngIf="mostrecentcount == 0" class="emptydata">
+      <p><b>There is no recent bills you have.</b></p>
+    </div>
+  <ion-grid class="mrbig1" *ngIf="mostrecentcount == 1">
     <ion-row class="mrbir1">
       <ion-col col-4 *ngFor="let m of mostrecent" class="mrbir1ic1" (click)="openBill(m)">
         <img src="assets/images/mcd.png" class="mrbastimg"><br>
@@ -96,7 +99,10 @@
     <div class="bdhead">
       Bills Due
     </div>
-  <ion-grid class="mrbig1">
+    <div *ngIf="duebillscount == 0" class="emptydata">
+      <p><b>You does not have any due bills.</b></p>
+    </div>
+  <ion-grid class="mrbig1" *ngIf="duebillscount == 1">
     <ion-row class="mrbir1">
       <ion-col col-4 *ngFor="let d of duebills" class="mrbir1ic1" (click)="openBill(d)">
         <img src="assets/images/mcd.png" class="mrbastimg"><br>
@@ -132,7 +138,10 @@
     <div class="dtwhead">
       Deals of the week
     </div>
-    <div class="dtwbody">
+    <div *ngIf="dealscount == 0" class="emptydata">
+      <p><b>You does not have any due bills.</b></p>
+    </div>
+    <div class="dtwbody" *ngIf="dealscount == 1">
       <ion-card>
         <ion-card-content>
           <ol>

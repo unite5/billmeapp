@@ -28,6 +28,7 @@ export class Categorybills {
   catbills:any;catbills2:any;
 
   titleColor:string;
+  cbcount:number;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -77,6 +78,13 @@ export class Categorybills {
       if(dt.status == "success"){
         this.catbills = dt.data;
         this.catbills2 = dt.data;
+        if((this.catbills).length>0){
+          this.cbcount=1;
+          //console.log(this.cbcount);
+        }else{
+          this.cbcount=0;
+          //console.log(this.cbcount);
+        }
       }else{
         console.log("no categories");
       }

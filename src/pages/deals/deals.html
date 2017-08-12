@@ -15,9 +15,14 @@
 
 
 <ion-content no-padding>
-  <ion-card *ngFor="let d of deals">
-    <ion-card-content>
-      {{d.description}}
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="dealscount == 0" class="nocats">
+      <img src="assets/images/no_data2.png" class="ncimg">
+  </div>
+    <div *ngIf="dealscount == 1">
+      <ion-card *ngFor="let d of deals">
+        <ion-card-content>
+          {{d.description}}
+        </ion-card-content>
+      </ion-card>
+    </div>
 </ion-content>

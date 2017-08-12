@@ -211,7 +211,35 @@ export class Signup {
     //this.regname = (<HTMLInputElement>document.getElementById('regUsername')).value;
     //console.log(this.regname+" "+(<HTMLInputElement>document.getElementById('regUsername')).value+" p:"+this.regpassword);
     console.log(this.regagree+" "+this.regaddress+" "+this.reggender+" "+this.regemail+" "+this.regpassword+" "+this.regname);
-    if(this.regagree == true){
+    if(this.regname == "" || this.regname == null){
+      this.toastCtrl.create({
+        message:'Username is required',duration:2000,position:'top'
+      }).present();
+    }else if(this.regpassword == "" || this.regpassword == null){
+      this.toastCtrl.create({
+        message:'Password is required',duration:2000,position:'top'
+      }).present();
+    }else if(this.reggender == "" || this.reggender == null){
+      this.toastCtrl.create({
+        message:'Gender is required',duration:2000,position:'top'
+      }).present();
+    }else if(this.regemail == "" || this.regemail == null){
+      this.toastCtrl.create({
+        message:'Email is required',duration:2000,position:'top'
+      }).present();
+    }else if(this.regaddress == "" || this.regaddress == null){
+      this.toastCtrl.create({
+        message:'Address is required',duration:2000,position:'top'
+      }).present();
+    }else if(this.regagree == false){
+      this.toastCtrl.create({
+        message:'You should agree with terms and condition',duration:2000,position:'top'
+      }).present();
+    }else if((this.regpassword).length < 6){
+      this.toastCtrl.create({
+        message:'Password should be 6 chars long!',duration:2000,position:'top'
+      }).present();
+    }else{
       console.log(this.regagree+" "+this.regaddress+" "+this.reggender+" "+this.regemail+" "+this.regpassword+" "+this.regname);
       let regData = {
         'agree':this.regagree,
@@ -231,20 +259,27 @@ export class Signup {
           console.info(JSON.stringify(res));
           let ans = JSON.parse(JSON.stringify(res));
           if(ans.status == "success"){
-            /*let loading2;
+            this.toastCtrl.create({
+              message:ans.message,
+              duration:2000,
+              position:'middle'
+            }).present();
+            let loading2;
             let ud = JSON.parse(JSON.stringify(ans.data));
             localStorage.setItem("billmeUID",ud.id);
             localStorage.setItem("billmeUser",this.regname);
             localStorage.setItem("billmePass",this.regpassword);
             localStorage.setItem("billmeIn","Y");
-            loading2 = this.loadCtrl.create({
+            setTimeout(()=>{
+              loading2 = this.loadCtrl.create({
                 content: 'Finalizing your assets...',
                 duration: 2000
               });
-            loading2.present();
+              loading2.present();
+            },2005);
             setTimeout(()=>{
                 this.navCtrl.push(MyApp);
-            },2005);*/
+            },4010);
           }else{
             this.toastCtrl.create({
               message:ans.message,
@@ -263,12 +298,6 @@ export class Signup {
             }).present();
         }
       );
-    }else{
-      this.toastCtrl.create({
-        message:'You should agree with terms and condition',
-        duration:2000,
-        position:'top'
-      }).present();
     }
   }
   findreg(regData){//server call method
