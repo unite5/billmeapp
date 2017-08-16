@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Receiptprovider } from '../../providers/receiptprovider';
 import { Receiptsview } from "../receiptsview/receiptsview";
+import { Billviewpdf } from '../billviewpdf/billviewpdf';
 
 import * as moment from 'moment';
+declare var cordova:any;
 /*
   Generated class for the Dashboard page.
 
@@ -32,7 +35,8 @@ export class Dashboard {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public loadCtrl:LoadingController,
-    public rp:Receiptprovider
+    public rp:Receiptprovider,
+    public iab: InAppBrowser
   ) {
       if(localStorage.getItem('AppTitleColor')){
         this.titleColor = localStorage.getItem('AppTitleColor');
@@ -57,7 +61,7 @@ export class Dashboard {
         <ion-spinner class="loadDataSpin" name="dots"></ion-spinner>`,
       cssClass:'classforspindata'
     });
-    //loading.present();
+    loading.present();
 
     this.rp.loadDashboardData().then(
       data=>{
@@ -127,6 +131,7 @@ export class Dashboard {
           //loading.dismiss();
           console.log("No bills right now available");
         }
+        loading.dismiss();
       },
       error=>{
         this.expenditure = "00.00";
@@ -151,6 +156,49 @@ export class Dashboard {
   convert(ucreated){
     let a = moment(new Date(ucreated)).format("MMM DD, YYYY");
     return a;
+  }
+
+  makepdf(){
+    const before = Date.now();
+ 
+    //document.addEventListener('deviceready', () => {
+        console.log('DEVICE READY FIRED AFTER', (Date.now() - before), 'ms');
+
+        //generate the pdf. 
+        let base64;let b4;
+        cordova.plugins.pdf.htmlToPDF({
+                data: "<html><h1>I am visible in pdf</h1></html>",
+                //url: "www.cloud.org/template.html" 
+            },
+            (sucess) => { 
+              b4 = sucess;
+              localStorage.setItem("billbase64",sucess);
+              let path = "data:application/pdf;base64,"+b4;
+              this.navCtrl.push(Billviewpdf,{
+                navpath:path
+              });
+            },
+            (error) => {
+              b4 = error;
+              localStorage.setItem("billbase64",error);
+          });
+        
+            base64 = localStorage.getItem("billbase64");
+        let url = "data:application/pdf;base64,"+b4;
+        //setTimeout(()=>{
+          /*alert(url);
+          const browser = this.iab.create(url,"_self",{
+            location:"yes",
+            clearcache:'yes',
+            zoom:'yes',
+            hardwareback:'yes',
+            closebuttoncaption:'OK'
+          });
+
+          browser.show();*/
+        //},5000);
+        
+    //});
   }
 
 }

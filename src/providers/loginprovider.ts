@@ -19,6 +19,7 @@ export class Loginprovider {
 
   loggedIn(loginData){
     loginData = JSON.stringify(loginData);
+    this.url = localStorage.getItem('appUrl')+"/"+localStorage.getItem('ApiKey');
     let url = this.url;
     //console.warn(url);
     return new Promise((resolve,reject)=>{
@@ -37,6 +38,7 @@ export class Loginprovider {
 
   register(regData){
     regData = JSON.stringify(regData);
+    this.url = localStorage.getItem('appUrl')+"/"+localStorage.getItem('ApiKey');
     let url = this.url;
     return new Promise((resolve,reject)=>{
       this.http.post(url+'/newregister',regData)

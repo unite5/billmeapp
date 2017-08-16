@@ -134,7 +134,7 @@ export class Receiptsview {
     });
     loading.present();
     const fileTransfer: FileTransferObject = this.transfer.create();//important
-    const url = this.navbillPDF;
+    let url = this.navbillPDF;
     let time = "_"+moment().format('HH:mm:ss')+"_"+this.navbuyedAt+"_"+localStorage.getItem("billmeUser");
     let name = "Bill_"+time+".pdf";
     //var fileTransfer = new Transfer();
@@ -145,37 +145,54 @@ export class Receiptsview {
         icon: 'assets/images/logo.png',
         smallIcon: 'assets/images/logo.png'
       });
-    fileTransfer.download(url, cordova.file.externalRootDirectory+"Billme/" + name).then((entry) => {
-      //console.log('download complete: ' + entry.toURL());
-      loading.dismiss();
-      this.toastCtrl.create({
-            message:"Downloaded successfully!",
-            duration:2000,
-            position:'middle'
-          }).present();
-          //alert(JSON.stringify(entry));
-      this.localNotifications.schedule({
-        id: 1,
-        title:'Bill Download completed!',
-        text: 'Saved at Billme folder '+name,
-        icon: 'assets/images/logo.png',
-        smallIcon: 'assets/images/logo.png'
-      });
-    }, (error) => {
-      loading.dismiss();
-      this.toastCtrl.create({
-            message:"Bill can not be downloaded, try again.",
-            duration:2000,
-            position:'top'
-          }).present();
-          //alert(JSON.stringify(error));
+    
+      if(this.isImg){
+        let base64;
+        cordova.plugins.pdf.htmlToPDF({
+                data: "<html><style>.pdfdiv{height:100%;width:100%;text-align:center;}"+
+                 ".pdfimg{padding:5%;margin-top:5%}</style> <div class='pdfdiv'><img class='pdfimg' src="+this.navbillPDF+"></div> </html>",
+                //url: "www.cloud.org/template.html" 
+            },
+            (sucess) => localStorage.setItem("billbase64",sucess),
+            (error) => localStorage.setItem("billbase64",error));
+
+        base64 = localStorage.getItem("billbase64");
+        url = "data:application/pdf;base64,"+base64;
+      }
+      if(this.isPdf){
+        url = this.navbillPDF;
+      }
+        fileTransfer.download(url, cordova.file.externalRootDirectory+"Billme/" + name).then((entry) => {
+          //console.log('download complete: ' + entry.toURL());
+          loading.dismiss();
+          this.toastCtrl.create({
+                message:"Downloaded successfully!",
+                duration:2000,
+                position:'middle'
+              }).present();
+              //alert(JSON.stringify(entry));
           this.localNotifications.schedule({
             id: 1,
-            title:'Bill not able to download completely, try again',
+            title:'Bill Download completed!',
+            text: 'Saved at Billme folder '+name,
             icon: 'assets/images/logo.png',
             smallIcon: 'assets/images/logo.png'
           });
-    });
+        }, (error) => {
+          loading.dismiss();
+          this.toastCtrl.create({
+                message:"Bill can not be downloaded, try again.",
+                duration:2000,
+                position:'top'
+              }).present();
+              //alert(JSON.stringify(error));
+              this.localNotifications.schedule({
+                id: 1,
+                title:'Bill not able to download completely, try again',
+                icon: 'assets/images/logo.png',
+                smallIcon: 'assets/images/logo.png'
+              });
+        });
   }
   download2(){
     /*this.navCtrl.push(Billview,{

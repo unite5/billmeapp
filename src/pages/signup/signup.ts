@@ -169,6 +169,8 @@ export class Signup {
           localStorage.setItem("billmeUID",ud.id);
           localStorage.setItem("billmeUser",this.username);
           localStorage.setItem("billmePass",this.password);
+          let pic =  ud.profilePic?ud.profilePic:'assets/images/person.png';
+          localStorage.setItem("billmeProfilePic",pic);
           localStorage.setItem("billmeIn","Y");
           loading2 = this.loadCtrl.create({
               content: 'Loading your assets...',
@@ -323,8 +325,10 @@ export class Signup {
           else{
             localStorage.setItem("ApiKey","no-api-key-found");
           }
+          //alert(localStorage.getItem('ApiKey')+" "+JSON.stringify(data));
         },
         error=>{
+          //alert(JSON.stringify(error));
           console.error(error);
         }
       );

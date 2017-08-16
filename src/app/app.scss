@@ -50,7 +50,7 @@ ion-header.header.header-md.header-md-newtitle {
     color: #fff;
 }
 .divfootermenu {
-    position: absolute;
+    position: relative;
     bottom: 0;
     /* margin: 5%; */
     font-size: medium;
@@ -60,6 +60,7 @@ ion-header.header.header-md.header-md-newtitle {
     -ms-flex-line-pack: center;
     align-content: center;
     width: 100%;
+    margin-top: 20%;
 }
 .divfootermenu p {
     font-size: medium;
@@ -76,7 +77,7 @@ ion-content.bmmenuic {
 ion-content.bmmenuic button.item.item-block.item-md {
     background-color: rgb(77,127,116);
     color: #fff;
-    margin: 8px;
+    margin: 6px;
     border-color: rgb(77,127,116);
 }
 ion-content.bmmenuic ion-list.list.list-md {

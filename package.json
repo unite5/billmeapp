@@ -60,6 +60,7 @@
     "@ionic-native/unique-device-id": "^4.0.1",
     "@ionic-native/video-player": "^4.0.1",
     "@ionic/storage": "2.0.1",
+    "cordova-pdf-generator": "^1.5.4",
     "ionic-angular": "3.5.0",
     "ionicons": "3.0.0",
     "moment": "^2.18.1",

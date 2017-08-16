@@ -32,6 +32,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any,icon:string}>;
 
+  pic:any;
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
@@ -45,6 +46,7 @@ export class MyApp {
     }
     else{
       this.billmeuser = localStorage.getItem("billmeUser");
+      this.pic = localStorage.getItem("billmeProfilePic");
       this.rootPage = Dashboard;//Profile;//
     }
     //this.rootPage = Dashboard;
